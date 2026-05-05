@@ -18,8 +18,8 @@ uint8_t cursor;
 int volatile* fb;
 int row, col, scroll_row;
 unsigned char* font;
-int WIDTH = 640;  // scan line width, default to 640
-int HEIGHT = 480;
+int WIDTH = 800;  // scan line width, default to 640
+int HEIGHT = 600;
 char* tab = "0123456789ABCDEF";
 
 int fbuf_init() {
@@ -27,20 +27,21 @@ int fbuf_init() {
   fb = (int*)0x200000;        // frame buffer at 2MB-4MB
   font = _binary_font_start;  // font bitmap
   //********* for 640x480 VGA mode *******************
-  *(volatile unsigned int *)(0x1000001c) = 0x2C77;
-  *(volatile unsigned int *)(0x10120000) = 0x3F1F3F9C;
-  *(volatile unsigned int *)(0x10120004) = 0x090B61DF;
-  *(volatile unsigned int *)(0x10120008) = 0x067F1800;
-  *(volatile unsigned int *)(0x10120010) = 0x200000; // at 2MB
-  *(volatile unsigned int *)(0x10120018) = 0x82B;
-  /********** for 800X600 SVGA mode ******************
+  // *(volatile unsigned int *)(0x1000001c) = 0x2C77;
+  // *(volatile unsigned int *)(0x10120000) = 0x3F1F3F9C;
+  // *(volatile unsigned int *)(0x10120004) = 0x090B61DF;
+  // *(volatile unsigned int *)(0x10120008) = 0x067F1800;
+  // *(volatile unsigned int *)(0x10120010) = 0x200000; // at 2MB
+  // *(volatile unsigned int *)(0x10120018) = 0x82B;
+
+  //********** for 800X600 SVGA mode ******************
   *(volatile unsigned int*)(0x1000001c) = 0x2CAC;  // 800x600
   *(volatile unsigned int*)(0x10120000) = 0x1313A4C4;
   *(volatile unsigned int*)(0x10120004) = 0x0505F6F7;
   *(volatile unsigned int*)(0x10120008) = 0x071F1800;
   *(volatile unsigned int*)(0x10120010) = 0x200000;
   *(volatile unsigned int*)(0x10120018) = 0x82B;
-  /**********/
+
   cursor = 219;  // cursor = row 127 in font bitmap
 }
 
@@ -173,7 +174,17 @@ int kprints(char* s) {
 }
 
 int krpx(int x) {
-  char c;
+  // char tempch = x;
+  // int hexLength = 0;
+  // while(tempch != 0){
+  //   hexLength++;
+  //   tempch = tempch >> 4;
+  // }
+  // for (int i = 1; i <= hexLength; i++){
+  //   tempch = (x >> ((hexLength - i) * 4)) % 16;
+  //   kputc(tempch);
+  // }
+  char c = x;
   if (x) {
     c = tab[x % 16];
     krpx(x / 16);
@@ -182,8 +193,8 @@ int krpx(int x) {
 }
 
 int kprintx(int x) {
-  kputc('0');
-  kputc('x');
+  // kputc('0');
+  // kputc('x');
   if (x == 0)
     kputc('0');
   else

@@ -40,6 +40,10 @@ int main() {
 
   char* p = &_binary____image0_bmp_start;
   show_bmp(p, 0, 0);  // display a logo
+  char* p1 = &_binary____image0_bmp_start;
+  show_bmp(p1, 0, 200);  // display a logo
+  kprintf("Decimal: %d\n", 1000000000);
+  kprintf("Hexadecimal: 0x%x\n", 0xABCD);
 
   while (1) {
     color = GREEN;
