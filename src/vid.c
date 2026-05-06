@@ -174,22 +174,21 @@ int kprints(char* s) {
 }
 
 int krpx(int x) {
-  // char tempch = x;
-  // int hexLength = 0;
-  // while(tempch != 0){
-  //   hexLength++;
-  //   tempch = tempch >> 4;
-  // }
-  // for (int i = 1; i <= hexLength; i++){
-  //   tempch = (x >> ((hexLength - i) * 4)) % 16;
-  //   kputc(tempch);
-  // }
-  char c = x;
-  if (x) {
-    c = tab[x % 16];
-    krpx(x / 16);
+  int tempch = x;
+  int hexLength = 0;
+  if (tempch == 0){
+    kputc(tab[0]);
   }
-  kputc(c);
+  else{
+    while(tempch != 0){
+      hexLength++;
+      tempch = tempch/16;
+    }
+    for (int i = 1; i <= hexLength; i++){
+      tempch = tab[(x >> ((hexLength - i) * 4)) % 16];
+      kputc(tempch);
+    }
+  }
 }
 
 int kprintx(int x) {
@@ -203,12 +202,25 @@ int kprintx(int x) {
 }
 
 int krpu(int x) {
-  char c;
-  if (x) {
-    c = tab[x % 10];
-    krpu(x / 10);
+  int tempch = x;
+  int decLength = 0;
+  if (tempch == 0){
+    kputc(tab[0]);
   }
-  kputc(c);
+  else{
+    while(tempch != 0){
+      decLength++;
+      tempch = tempch/10;
+    }
+    for (int i = 1; i <= decLength; i++){
+      int power = 1;
+      for (int j = 0; j < decLength - i; j++){
+        power = power * 10;
+      }
+      tempch = tab[(x/power) % 10];
+      kputc(tempch);
+    }
+  }
 }
 
 int kprintu(int x) {

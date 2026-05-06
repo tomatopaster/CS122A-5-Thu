@@ -85,6 +85,9 @@ Run your program and type four different strings into the console. Take a screen
 
 Your output should look something like this:
 ![Screen capture of QEMU session with code modifications listed above](assets/qemu_screenshot.png)
+
+![Screen capture with all of the code modifications](assets/cs122ahw.png)
+
 Once finished:
 1.  **Commit and push** your changes to GitHub.
 2.  Submit the assignment via **Gradescope**.
